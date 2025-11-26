@@ -1,0 +1,142 @@
+### Code Execution Log - 2025-11-26 03:53:16 ###
+
+################################################################################
+## Executed at: 2025-11-26 03:53:16
+## Cell: 33c8d7a6-4cdb-49c7-af62-29b974599fb8
+
+# Setup slice, or retrieve values if slice already exists
+from scripts import funcs
+
+slice_values = funcs.setup(student_id=student_id, verbose=verbose)
+
+vslice = slice_values['slice']
+configs = slice_values['configs']
+ips = slice_values['ips']
+macs = slice_values['macs']
+ifaces = slice_values['ifaces']
+subnets = slice_values['subnets']
+hosts = slice_values['hosts']
+switches = slice_values['switches']
+gateways = slice_values['gateways']
+
+################################################################################
+## Executed at: 2025-11-26 03:53:16
+## Cell: f8c1e9cb-dead-4051-b4dc-150759302002
+
+# If the above had any node fail, UNCOMMENT the line below and execute this cell, then try again
+#slice.delete()
+
+################################################################################
+## Executed at: 2025-11-26 03:53:16
+## Cell: b071e1dc-7931-46d5-addd-cf8fa2982212
+
+# For convenience, list all the values from the config file
+funcs.print_values(configs, macs, ips)
+
+################################################################################
+## Executed at: 2025-11-26 03:53:21
+## Cell: 4b1db101-f3f6-43c6-84c4-f9a94c84ad29
+
+for node in vslice.get_nodes():
+    print(f"{node.get_name()}: {node.get_ssh_command()}")
+
+################################################################################
+## Executed at: 2025-11-26 03:53:37
+## Cell: 1acfa171-1e07-47da-873c-90c76eff4b79
+
+# Start switches before the tests - this also uploads your most recent P4 and add_rules files
+funcs.start_switches(switches, verbose)
+
+################################################################################
+## Executed at: 2025-11-26 03:57:17
+## Cell: a44136ad-1f89-4758-b14f-14a447fdea64
+
+# Ping Test
+pingscore = funcs.ping_test(hosts, ips)
+
+################################################################################
+## Executed at: 2025-11-26 03:57:34
+## Cell: 09a81427-f715-4d08-b47e-8fb4504dc923
+
+# Port Test
+portscore = funcs.port_test(hosts, ips, configs, ifaces, student_id, verbose)
+
+################################################################################
+## Executed at: 2025-11-26 03:58:26
+## Cell: ea737117-9e04-4f6d-b7aa-2b752e420519
+
+# h23 Test
+h23score = funcs.h23_test(hosts, ips, switches, ifaces, configs, macs, gateways, verbose)
+
+print(f"Total Score: {pingscore+portscore+h23score}/10pts")
+
+################################################################################
+## Executed at: 2025-11-26 03:58:28
+## Cell: f7ea506a-2979-4623-a05c-e339cf94bf95
+
+# To stop the switches, so they can be restarted (such as to update their P4 code)
+funcs.stop_switches(switches, verbose)
+
+################################################################################
+## Executed at: 2025-11-26 03:58:53
+## Cell: 03d7a3e7-9187-40a2-b39f-1dc58d2e30a9
+
+# Run this to generate the .tar.gz file you will submit to Canvas
+funcs.create_tar(student_id, hosts, switches, override=True)
+
+################################################################################
+## Executed at: 2025-11-26 03:58:53
+## Cell: 3c94d768-6f84-42f0-9b06-e0a1f3b032f0
+
+# Uncomment and delete your slice when you're finished
+# vslice.delete()
+
+################################################################################
+## Executed at: 2025-11-26 04:17:05
+## Cell: 1acfa171-1e07-47da-873c-90c76eff4b79
+
+# Start switches before the tests - this also uploads your most recent P4 and add_rules files
+funcs.start_switches(switches, verbose)
+
+################################################################################
+## Executed at: 2025-11-26 04:20:54
+## Cell: a44136ad-1f89-4758-b14f-14a447fdea64
+
+# Ping Test
+pingscore = funcs.ping_test(hosts, ips)
+
+################################################################################
+## Executed at: 2025-11-26 04:20:54
+## Cell: b071e1dc-7931-46d5-addd-cf8fa2982212
+
+# For convenience, list all the values from the config file
+funcs.print_values(configs, macs, ips)
+
+################################################################################
+## Executed at: 2025-11-26 04:20:59
+## Cell: 4b1db101-f3f6-43c6-84c4-f9a94c84ad29
+
+for node in vslice.get_nodes():
+    print(f"{node.get_name()}: {node.get_ssh_command()}")
+
+################################################################################
+## Executed at: 2025-11-26 04:21:13
+## Cell: 1acfa171-1e07-47da-873c-90c76eff4b79
+
+# Start switches before the tests - this also uploads your most recent P4 and add_rules files
+funcs.start_switches(switches, verbose)
+
+################################################################################
+## Executed at: 2025-11-26 04:24:51
+## Cell: a44136ad-1f89-4758-b14f-14a447fdea64
+
+# Ping Test
+pingscore = funcs.ping_test(hosts, ips)
+
+################################################################################
+## Executed at: 2025-11-26 04:25:14
+## Cell: 1acfa171-1e07-47da-873c-90c76eff4b79
+
+# Start switches before the tests - this also uploads your most recent P4 and add_rules files
+funcs.start_switches(switches, verbose)
+
