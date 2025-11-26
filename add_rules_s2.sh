@@ -5,7 +5,8 @@ simple_switch_CLI << _EOF_
 table_add ipv6_host forward 2001:db8:347c:d902::840:5a3b => c4:9b:87:6c:82:15 1
 table_add ipv6_host forward 2001:db8:347c:d902::9610:d3ec => d4:bb:4e:80:f5:23 2
 
-table_add ipv6_lpm forward 2001:db8:28fe:5613::/64 => 20:2f:38:b6:87:8a 4
+# Use the MAC of s1's port 4 (from the spec, line 10: f0:b6:f2:1f:4e:1b)
+table_add ipv6_lpm forward 2001:db8:28fe:5613::/64 => f0:b6:f2:1f:4e:1b 4
 
 table_add port_filter allow_port 45 =>
 table_add port_filter allow_port 178 =>
