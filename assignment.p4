@@ -211,23 +211,19 @@ control MyIngress(inout headers hdr,
 
     apply {
         if(hdr.ipv6.isValid()) {
-            bool drop_packet = false;
+            bool should_drop = false;
             
             if(hdr.tcp.isValid()) {
                 if(port_filter.apply().miss && port_filter_dst.apply().miss) {
-                    drop_packet = true;
+                    should_drop = true;
                 }
-            }
-            
-            if(hdr.udp.isValid()) {
+            } else if(hdr.udp.isValid()) {
                 if(udp_port_filter.apply().miss && udp_port_filter_dst.apply().miss) {
-                    drop_packet = true;
+                    should_drop = true;
                 }
             }
             
-            if(drop_packet) {
-                drop();
-            } else {
+            if(!should_drop) {
                 if(ipv6_host.apply().miss) {
                     ipv6_lpm.apply();
                 }
